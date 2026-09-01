@@ -1,0 +1,4 @@
+NET 	"i_CLK"		LOC = "P38"; #PCLK
+NET	"o_LD"		LOC = "P69"; #LD0
+NET	"i_SW<0>"		LOC = "P39";	#SW0
+NET	"i_SW<1>"		LOC = "P124";	#SW1
