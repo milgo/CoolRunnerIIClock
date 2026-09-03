@@ -32,10 +32,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity CR_II_Demo is
     Port ( CLK : in  STD_LOGIC;
            BTN : in  STD_LOGIC_VECTOR (1 downto 0);
-           SW : in  STD_LOGIC_VECTOR (1 downto 0);
+           --SW : in  STD_LOGIC_VECTOR (1 downto 0);
            CAT : out  STD_LOGIC_VECTOR (7 downto 0);
-           ANO : out  STD_LOGIC_VECTOR (3 downto 0);
-           LD : out  STD_LOGIC_VECTOR (3 downto 0));
+           ANO : out  STD_LOGIC_VECTOR (3 downto 0)--;
+          --LD : out  STD_LOGIC_VECTOR (3 downto 0)
+		 );
 end CR_II_Demo;
 
 architecture Behavioral of CR_II_Demo is
@@ -78,13 +79,13 @@ begin
 
 	
 	s_rst <=  not BTN(0);
-	CAT(7) <= s_anode(1);
+	CAT(7) <= s_anode(2);
 	ANO <= s_anode;
-	LD(2 downto 0) <= "111" when SW = "00" else
-							"110" when SW = "01" else
-							"101" when SW = "10" else
-							"011";
-	LD(3) <= s_base;
+	--LD(2 downto 0) <= "111" when SW = "00" else
+	--						"110" when SW = "01" else
+	--						"101" when SW = "10" else
+	--						"011";
+	--LD(3) <= s_base;
 
 	Inst_clk_div: clk_div PORT MAP(
 		CLK => CLK,

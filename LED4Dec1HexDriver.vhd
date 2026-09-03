@@ -55,8 +55,8 @@ begin
 	if (RST = '1') then
 		ONE_SIGNAL <= "0000";
 		TEN_SIGNAL <= "0000";
-		HUN_SIGNAL <= "0000";
-		THO_SIGNAL <= "0000";
+		HUN_SIGNAL <= "0010";
+		THO_SIGNAL <= "0010";
 
 	elsif (CLK'event and CLK = '1') then
 		if CEN = '1' then
@@ -74,10 +74,10 @@ begin
 			
 			if TC_ONES = '1' then
 			
-				if TEN_SIGNAL = DECIMAL_MAX then
+				if TEN_SIGNAL = "0101" then --5
 					TEN_SIGNAL <= "0000";
 					TC_TENS <= '0';
-				elsif TEN_SIGNAL = "1000" then
+				elsif TEN_SIGNAL = "0100" then
 					TC_TENS <= '1';
 					TEN_SIGNAL <= TEN_SIGNAL + 1;
 				else
@@ -89,25 +89,35 @@ begin
 			
 			if TC_ONES = '1' and TC_TENS = '1' then
 			
-				if HUN_SIGNAL = DECIMAL_MAX then
-					HUN_SIGNAL <= "0000";
-					TC_HUNS <= '0';
-				elsif HUN_SIGNAL = "1000" then
-					TC_HUNS <= '1';
-					HUN_SIGNAL <= HUN_SIGNAL + 1;
-				else 
-					HUN_SIGNAL <= HUN_SIGNAL + 1;
-					TC_HUNS <= '0';
+				if THO_SIGNAL = "0010" then
+					if HUN_SIGNAL = "0011" then
+						HUN_SIGNAL <= "0000";
+						TC_HUNS <= '0';
+					elsif HUN_SIGNAL = "0010" then
+						TC_HUNS <= '1';
+						HUN_SIGNAL <= HUN_SIGNAL + 1;
+					end if;
+				else
+					if HUN_SIGNAL = DECIMAL_MAX then
+						HUN_SIGNAL <= "0000";
+						TC_HUNS <= '0';
+					elsif HUN_SIGNAL = "1000" then
+						TC_HUNS <= '1';
+						HUN_SIGNAL <= HUN_SIGNAL + 1;					
+					else 
+						HUN_SIGNAL <= HUN_SIGNAL + 1;
+						TC_HUNS <= '0';
+					end if;
 				end if;
 				
 			end if;
 			
 			if TC_ONES = '1' and TC_TENS = '1' and TC_HUNS = '1' then
 			
-				if THO_SIGNAL = DECIMAL_MAX then
+				if THO_SIGNAL = "0010" then
 					THO_SIGNAL <= "0000";
 					TC_THOU <= '0';
-				elsif THO_SIGNAL = "1000" then
+				elsif THO_SIGNAL = "0001" then
 					TC_THOU <= '1';
 					THO_SIGNAL <= THO_SIGNAL + 1;
 				else
