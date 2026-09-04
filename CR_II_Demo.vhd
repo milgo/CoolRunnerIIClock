@@ -46,6 +46,7 @@ architecture Behavioral of CR_II_Demo is
 		CLK : IN std_logic;
 		RST : IN std_logic;          
 		BASE : OUT std_logic;
+		MINS : OUT std_logic;
 		DISP : OUT std_logic
 		);
 	END COMPONENT;
@@ -67,6 +68,7 @@ architecture Behavioral of CR_II_Demo is
 
 signal s_rst : std_logic;
 signal s_base : std_logic;
+signal s_mins : std_logic;
 signal s_disp : std_logic;
 signal s_anode: std_logic_vector(3 downto 0);
 
@@ -79,7 +81,7 @@ begin
 
 	
 	s_rst <=  not BTN(0);
-	CAT(7) <= s_anode(2);
+	CAT(7) <= not (not s_anode(2) and not s_base);
 	ANO <= s_anode;
 	--LD(2 downto 0) <= "111" when SW = "00" else
 	--						"110" when SW = "01" else
@@ -91,12 +93,13 @@ begin
 		CLK => CLK,
 		RST => s_rst,
 		BASE => s_base,
+		MINS => s_mins,
 		DISP => s_disp
 	);
 	
 	Inst_Timer_Block: Timer_Block PORT MAP(
 		CLK_1KHZ => s_disp,
-		CLK_BASE => s_base,
+		CLK_BASE => s_mins,
 		RST => s_rst,
 		T_ENABLE => BTN(1),
 		ANODE => s_anode,

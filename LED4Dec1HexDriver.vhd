@@ -58,7 +58,7 @@ begin
 		HUN_SIGNAL <= "0010";
 		THO_SIGNAL <= "0010";
 
-	elsif (CLK'event and CLK = '1') then
+	elsif (CLK'event and CLK = '0') then
 		if CEN = '1' then
 		
 			if ONE_SIGNAL = DECIMAL_MAX then
